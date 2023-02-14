@@ -2,7 +2,7 @@
 from bs4 import BeautifulSoup
 import requests
  
-def main(URL):
+def scrape(URL):
     # opening our output file in append mode
     File = open("out.csv", "a")
  
@@ -36,59 +36,10 @@ def main(URL):
     # saving the title in the file
     File.write(f"{title_string},")
  
-    # # retrieving price
-    # try:
-    #     price = soup.find(
-    #         "span", attrs={'id': 'priceblock_ourprice'}).string.strip().replace(',', '')
-    #     # we are omitting unnecessary spaces
-    #     # and commas form our string
-    # except AttributeError:
-    #     price = "NA"
-    # print("Products price = ", price)
-
-    # # retrieving price WORKING
-    # try:
-    #     price = soup.find("span", attrs={"id": 'sns-base-price'}).text.strip().replace(',', '',).replace('\n', '')
-    #     # we are omitting unnecessary spaces
-    #     # and commas form our string
-    # except AttributeError:
-    #     price = "NA"
-    # print("Products price = ", price)
- 
-    # # saving
-    # File.write(f"{price},")
-
-     # retrieving price TODAY
-    # try:
-    #     price = soup.find("span", attrs={"class_": "a-offscreen"}).text
-    #     print("Products price = ", price)
-    #     # if price.find('\n') != -1:
-    #     #     priceSplit = price.split('\n')
-    #     #     price = priceSplit[0].strip()
-    #     # we are omitting unnecessary spaces
-    #     # and commas form our string
-    # except AttributeError:
-    #     pass
-    # try:
-    #     price = soup.find("span", attrs={"id": 'sns-base-price'}).text
-    #     if price.find('\n') != -1:
-    #         priceSplit = price.split('\n')
-    #         price = priceSplit[0].strip()
-    #     # we are omitting unnecessary spaces
-    #     # and commas form our string   
-    # except AttributeError:
-    #     price = "NA"
-    # print("Products price = ", price)
-
-
-
+   # Retreivng Price
     try:
-        price = soup.find("span", class_="a-offscreen").text        
-        # if price.find('\n') != -1:
-        #     priceSplit = price.split('\n')
-        #     price = priceSplit[0].strip()
-        # we are omitting unnecessary spaces
-        # and commas form our string
+        price = soup.find("span", class_="a-offscreen").text
+        
     except AttributeError:
         try:
             price = soup.find("span", attrs={"id": 'sns-base-price'}).text
@@ -150,4 +101,4 @@ if __name__ == '__main__':
  
     # iterating over the urls
     for links in file.readlines():
-        main(links)
+        scrape(links)
