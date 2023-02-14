@@ -58,16 +58,47 @@ def main(URL):
     # # saving
     # File.write(f"{price},")
 
-     # retrieving price
+     # retrieving price TODAY
+    # try:
+    #     price = soup.find("span", attrs={"class_": "a-offscreen"}).text
+    #     print("Products price = ", price)
+    #     # if price.find('\n') != -1:
+    #     #     priceSplit = price.split('\n')
+    #     #     price = priceSplit[0].strip()
+    #     # we are omitting unnecessary spaces
+    #     # and commas form our string
+    # except AttributeError:
+    #     pass
+    # try:
+    #     price = soup.find("span", attrs={"id": 'sns-base-price'}).text
+    #     if price.find('\n') != -1:
+    #         priceSplit = price.split('\n')
+    #         price = priceSplit[0].strip()
+    #     # we are omitting unnecessary spaces
+    #     # and commas form our string   
+    # except AttributeError:
+    #     price = "NA"
+    # print("Products price = ", price)
+
+
+
     try:
-        price = soup.find("span", attrs={"id": 'sns-base-price'}).text
-        if price.find('\n') != -1:
-            priceSplit = price.split('\n')
-            price = priceSplit[0].strip()
+        price = soup.find("span", class_="a-offscreen").text        
+        # if price.find('\n') != -1:
+        #     priceSplit = price.split('\n')
+        #     price = priceSplit[0].strip()
         # we are omitting unnecessary spaces
         # and commas form our string
     except AttributeError:
-        price = "NA"
+        try:
+            price = soup.find("span", attrs={"id": 'sns-base-price'}).text
+            if price.find('\n') != -1:
+                priceSplit = price.split('\n')
+                price = priceSplit[0].strip()
+            # we are omitting unnecessary spaces
+            # and commas form our string   
+        except AttributeError:
+            price = "NA"
     print("Products price = ", price)
  
     # saving
