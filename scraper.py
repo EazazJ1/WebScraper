@@ -1,16 +1,14 @@
-# importing libraries
 from bs4 import BeautifulSoup
 import requests
 import json
  
 def scrape(URL):
-    # opening our output file in append mode
-    #File = open("out.csv", "a")
+    # Dict for storing product details
     product = {
         "Name": "",
         "Price": 0,
-        "Rating": 0,
-        "ReviewCount": 0,
+        "Rating": "",
+        "ReviewCount": "",
         "Availability": ""
     }
  
@@ -39,10 +37,8 @@ def scrape(URL):
  
     except AttributeError:
         title_string = "NA"
-    #print("product Title = ", title_string)
  
-    # saving the title in the file
-    #File.write(f"{title_string},")
+    # saving the Name in the dict
     product["Name"] = title_string
     #print("Product Name = ", product["Name"])
  
@@ -60,10 +56,8 @@ def scrape(URL):
             # and commas form our string   
         except AttributeError:
             price = "NA"
-   # print("Products price = ", price)
  
-    # saving
-    #File.write(f"{price},")
+    # saving price to dict
     product["Price"] = price
     #print("Products price = ", price)
  
@@ -78,9 +72,8 @@ def scrape(URL):
                 "span", attrs={'class': 'a-icon-alt'}).string.strip().replace(',', '')
         except:
             rating = "NA"
-    #print("Overall rating = ", rating)
  
-    #File.write(f"{rating},")
+    # Saving ratings to dict
     product["Rating"] = rating
     #print("Overall rating = ", rating)
  
@@ -90,8 +83,8 @@ def scrape(URL):
  
     except AttributeError:
         review_count = "NA"
-    #print("Total reviews = ", review_count)
-    #File.write(f"{review_count},")
+
+    # Save ReviewCount to dict
     product["ReviewCount"] = review_count
     #print("Total reviews = ", review_count)
 
@@ -102,23 +95,10 @@ def scrape(URL):
  
     except AttributeError:
         available = "NA"
-    #print("Availability = ", available)
  
-    # saving the availability and closing the line
-    #File.write(f"{available},\n")
+    # Saving the availability
     product["Availability"] = available
     #print("Availability = ", available)
  
-    # closing the file
-    #File.close()
+    # Return the product as a JSON object
     return json.dumps(product)
- 
- 
-# if __name__ == '__main__':
-#   # opening our url file to access URLs
-#     file = open("url.txt", "r")
- 
-#     # iterating over the urls
-#     for links in file.readlines():
-#         x = scrape(links)
-#         print(x)
