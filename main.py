@@ -1,10 +1,18 @@
 # importing libraries
 from bs4 import BeautifulSoup
 import requests
+import json
  
 def scrape(URL):
     # opening our output file in append mode
-    File = open("out.csv", "a")
+    #File = open("out.csv", "a")
+    product = {
+        "Name": "",
+        "Price": 0,
+        "Rating": 0,
+        "ReviewCount": 0,
+        "Availability": ""
+    }
  
     # specifying user agent, You can use other user agents
     # available on the internet
@@ -31,10 +39,12 @@ def scrape(URL):
  
     except AttributeError:
         title_string = "NA"
-    print("product Title = ", title_string)
+    #print("product Title = ", title_string)
  
     # saving the title in the file
-    File.write(f"{title_string},")
+    #File.write(f"{title_string},")
+    product["Name"] = title_string
+    #print("Product Name = ", product["Name"])
  
    # Retreivng Price
     try:
@@ -50,10 +60,12 @@ def scrape(URL):
             # and commas form our string   
         except AttributeError:
             price = "NA"
-    print("Products price = ", price)
+   # print("Products price = ", price)
  
     # saving
-    File.write(f"{price},")
+    #File.write(f"{price},")
+    product["Price"] = price
+    #print("Products price = ", price)
  
     # retrieving product rating
     try:
@@ -66,9 +78,11 @@ def scrape(URL):
                 "span", attrs={'class': 'a-icon-alt'}).string.strip().replace(',', '')
         except:
             rating = "NA"
-    print("Overall rating = ", rating)
+    #print("Overall rating = ", rating)
  
-    File.write(f"{rating},")
+    #File.write(f"{rating},")
+    product["Rating"] = rating
+    #print("Overall rating = ", rating)
  
     try:
         review_count = soup.find(
@@ -76,9 +90,11 @@ def scrape(URL):
  
     except AttributeError:
         review_count = "NA"
-    print("Total reviews = ", review_count)
-    File.write(f"{review_count},")
- 
+    #print("Total reviews = ", review_count)
+    #File.write(f"{review_count},")
+    product["ReviewCount"] = review_count
+    #print("Total reviews = ", review_count)
+
     # print availablility status
     try:
         available = soup.find("div", attrs={'id': 'availability'})
@@ -86,13 +102,16 @@ def scrape(URL):
  
     except AttributeError:
         available = "NA"
-    print("Availability = ", available)
+    #print("Availability = ", available)
  
     # saving the availability and closing the line
-    File.write(f"{available},\n")
+    #File.write(f"{available},\n")
+    product["Availability"] = available
+    #print("Availability = ", available)
  
     # closing the file
-    File.close()
+    #File.close()
+    return json.dumps(product)
  
  
 if __name__ == '__main__':
@@ -101,4 +120,5 @@ if __name__ == '__main__':
  
     # iterating over the urls
     for links in file.readlines():
-        scrape(links)
+        x = scrape(links)
+        print(x)
