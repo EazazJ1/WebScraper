@@ -114,11 +114,11 @@ def scrape(URL):
     return json.dumps(product)
  
  
-if __name__ == '__main__':
-  # opening our url file to access URLs
-    file = open("url.txt", "r")
+# if __name__ == '__main__':
+#   # opening our url file to access URLs
+#     file = open("url.txt", "r")
  
-    # iterating over the urls
-    for links in file.readlines():
-        x = scrape(links)
-        print(x)
+#     # iterating over the urls
+#     for links in file.readlines():
+#         x = scrape(links)
+#         print(x)
