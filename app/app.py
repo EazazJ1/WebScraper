@@ -19,15 +19,8 @@ def default():
 def get_product_details():
     content_type = request.headers.get('Content-Type')
     if (content_type == 'application/json'):
-        #body = request.json
-        # results = scraper.scrape(body["URL"])
-        results = {
-        "Name": "Kingston 480GB A400 SATA 3 2.5 inch Internal SSD SA400S37/480G - HDD Replacement for Increase Performance",
-        "Price": "$37.97",
-        "Rating": "4.7 out of 5 stars",
-        "ReviewCount": "181441 ratings",
-        "Availability": "In Stock"
-    }
+        body = request.json
+        results = scraper.scrape(body["URL"])        
         return results
     else:
         return 'Content-Type not supported!'
